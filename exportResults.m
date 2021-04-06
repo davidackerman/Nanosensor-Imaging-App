@@ -12,4 +12,7 @@ function [] = exportResults(app)
         df(:,i)=results.roiData(i).dFdetrend;
     end
     writematrix(df,strcat(fileToSave(1:end-4),'.xlsx'),'Sheet','dF_F0 Detrend')
+    
+    outputImagePath = strcat(app.imageStackInfo.pathName,app.imageStackInfo.fileName(1:end-4));
+    generateROIPlots(outputImagePath, results);
 end

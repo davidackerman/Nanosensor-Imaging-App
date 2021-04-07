@@ -1,5 +1,4 @@
 function [] = generateROIPlots(path, results, frame, doImageAtFrame, pixelSize)
-    
     stimFrame = results.imageStackInfo.stimFrame;
     mask = results.roiMask;
 

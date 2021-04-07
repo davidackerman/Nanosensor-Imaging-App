@@ -32,7 +32,7 @@ The Nanosensor-Imaging-App (NIA) is a MATLAB App built for processing timeseries
 
 <a name="installation"></a>
 ## Installation
-**Download** the MATLAB App Installer [here](https://github.com/jtdbod/Nanosensor-Imaging-App/raw/master/Nanosensor-Imaging-App.mlappinstall). Double click the installation file and then click Install. Once installed, the app is added to the Apps Toolstrip in MATLAB.
+**Download** the MATLAB App Installer [here](https://github.com/davidackerman/Nanosensor-Imaging-App/raw/master/Nanosensor-Imaging-App.mlappinstall). Double click the installation file and then click Install. Once installed, the app is added to the Apps Toolstrip in MATLAB.
 
 NIA was developed and tested using the following dependences:
 

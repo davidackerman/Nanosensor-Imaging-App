@@ -4,6 +4,7 @@ function [] = generateROIPlots(path, results, frame, doImageAtFrame, pixelSize)
 
     aucImage = nan(size(mask));
     dFFImage = nan(size(mask));
+    zscoreImage = nan(size(mask));
     if doImageAtFrame
         dFFImageAtFrame = nan(size(mask));
     end
@@ -14,6 +15,7 @@ function [] = generateROIPlots(path, results, frame, doImageAtFrame, pixelSize)
         
         [~, index] = max(current_roi_data.zscore(stimFrame:end));
         dFFImage(mask==current_roi) = current_roi_data.dF(stimFrame+index-1);
+        zscoreImage(mask==current_roi) = current_roi_data.zscore(stimFrame+index-1);
         
         if(doImageAtFrame)
             dFFImageAtFrame(mask==current_roi) = current_roi_data.dF(frame);
@@ -22,6 +24,7 @@ function [] = generateROIPlots(path, results, frame, doImageAtFrame, pixelSize)
     
     writeImage(aucImage,pixelSize, path+"_AUC",'AUC', 'AUC');
     writeImage(dFFImage,pixelSize, path+"_dF_max_zscore",'\DeltaF Max Zscore',"\DeltaF");
+    writeImage(zscoreImage,pixelSize, path+"_max_zscore",'Max Zscore',"zscore");
     if(doImageAtFrame)
         writeImage(dFFImageAtFrame, pixelSize, path+"_dF_frame_"+num2str(frame),"\DeltaF Frame "+num2str(frame),"\DeltaF");
     end

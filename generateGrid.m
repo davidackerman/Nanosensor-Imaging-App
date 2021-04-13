@@ -2,22 +2,18 @@ function [roiMask]=generateGrid(app)%Generate grid of ROIs
 gridSize=app.imageStackInfo.gridSize;
 height = app.imageStackInfo.height;
 width = app.imageStackInfo.width;
-mask = ones(height,width);
-mask(gridSize:gridSize:end,:)=0;
-mask(:,gridSize:gridSize:end)=0;
-%Number each ROI
-cc=bwconncomp(mask);
-roiMask = labelmatrix(cc);
-%Eliminate the small edge ROIs
-roiData = regionprops(roiMask,'Area');
-maxRoiArea = max([roiData(:).Area]);
-for i = 1:max(roiMask(:))
-    if roiData(i).Area < (0.7*maxRoiArea)
-        roiMask(roiMask==i)=0;
-    end
+roiMask = zeros(height,width,'uint16');
+columnAdjuster = 0;
+for column = 1:width
+   for row = 1:height
+       roiLabel = (floor((row-1)/gridSize)+1) + columnAdjuster;
+       roiMask(row,column) = roiLabel;
+   end
+   
+   if mod(column,gridSize)==0
+       columnAdjuster=roiLabel;
+   end
 end
-%Renumber the roi mask
-cc = bwconncomp(roiMask);
-roiMask = labelmatrix(cc);
 drawGrid(roiMask,app.UIAxes);
+
 end

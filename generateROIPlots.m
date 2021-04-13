@@ -1,4 +1,4 @@
-function [] = generateROIPlots(path, results, frame, doImageAtFrame, pixelSize)
+function [] = generateROIPlots(path, results, frame, doImageAtFrame, pixelSize, lowClip, highClip)
     stimFrame = results.imageStackInfo.stimFrame;
     mask = results.roiMask;
 
@@ -23,17 +23,17 @@ function [] = generateROIPlots(path, results, frame, doImageAtFrame, pixelSize)
     end
 
     writeImage(aucImage,pixelSize, path+"_AUC",'AUC', 'AUC');
-    writeImage(dFClip(dFFImage),pixelSize, path+"_dF_max_zscore",'\DeltaF Max Zscore',"\DeltaF");
+    writeImage(dFClip(dFFImage, lowClip, highClip),pixelSize, path+"_dF_max_zscore",'\DeltaF Max Zscore',"\DeltaF");
     writeImage(zscoreImage,pixelSize, path+"_max_zscore",'Max Zscore',"zscore");
     if(doImageAtFrame)
-        writeImage(dFClip(dFFImageAtFrame), pixelSize, path+"_dF_frame_"+num2str(frame),"\DeltaF Frame "+num2str(frame),"\DeltaF");
+        writeImage(dFClip(dFFImageAtFrame, lowClip, highClip), pixelSize, path+"_dF_frame_"+num2str(frame),"\DeltaF Frame "+num2str(frame),"\DeltaF");
     end
 end
 
-function inputArray = dFClip(inputArray)
-    % clip at 5th percentile and 90th percentile
-    high = prctile(inputArray,90,'all');
-    low = max(0,prctile(inputArray,5,'all'));
+function inputArray = dFClip(inputArray, lowClip, highClip)
+    % clip at specified percentiles
+    high = prctile(inputArray,highClip,'all');
+    low = max(0,prctile(inputArray,lowClip,'all'));
     inputArray(inputArray>high) = high;
     inputArray(inputArray<low) = low;
 end

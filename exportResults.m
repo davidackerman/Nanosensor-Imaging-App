@@ -14,5 +14,6 @@ function [] = exportResults(app)
     writematrix(df,strcat(fileToSave(1:end-4),'.xlsx'),'Sheet','dF_F0 Detrend')
     
     outputImagePath = strcat(app.imageStackInfo.pathName,app.imageStackInfo.fileName(1:end-4));
-    generateROIPlots(outputImagePath, results, app.dFFFrameEditField.Value, app.dFFFrameCheckBox.Value, app.PixelsmEditField.Value);
+    
+    generateROIPlots(outputImagePath, results, app.dFFFrameEditField.Value, app.dFFFrameCheckBox.Value, app.PixelsmEditField.Value, app.dFFClipLowEditField.Value, app.dFFClipHighEditField.Value);
 end

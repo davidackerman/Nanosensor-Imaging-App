@@ -5,7 +5,7 @@ function [] = exportResults(app)
     %and other information summarizing the data.
     fileToSave = strcat(app.imageStackInfo.pathName,'/',app.imageStackInfo.fileName);
     results = app.results;
-    save(strcat(fileToSave(1:end-4),'.mat'),'results');
+    save(strcat(fileToSave(1:end-4),'.mat'),'results','-v7.3');
     %Create array of dF/F values
     df = zeros(length(results.roiData(1).dFdetrend),length(results.roiData));
     for i=1:length(results.roiData)

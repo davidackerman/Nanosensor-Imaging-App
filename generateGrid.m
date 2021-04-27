@@ -17,12 +17,17 @@ for column = 1:width
    end
 end
 
+relabeledRoi = 1;
 for currentRoi = 1:max(roiMask(:))
     currentRoiPixels = roiMask==currentRoi;
     if sum(currentRoiPixels(:)) < minimumRoiArea
         roiMask(currentRoiPixels) = 0;
+    else
+        roiMask(currentRoiPixels) = relabeledRoi;
+        relabeledRoi = relabeledRoi+1;
     end
 end
+
 
 drawGrid(roiMask,app.UIAxes);
 
